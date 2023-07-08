@@ -47,6 +47,12 @@ MVP: Manage Money, Analysis, Planning
 
 ![base_sketcht](./sketch-base.svg)
 
+
+## Next up
+
+- High fidelity sketch of Home, Planning, Cashflow
+- more..
+
 ## Team
 
 - @Hannachan105: React, UX, Firebase basic = "React"

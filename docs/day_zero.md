@@ -1,4 +1,4 @@
-# Studibucket
+# Studibucket - Day 0
 
 Studibucket is a mobile app that helps you to manage your personal finance!
 We enable students to collectively save money. 

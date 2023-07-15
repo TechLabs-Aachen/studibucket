@@ -4,7 +4,10 @@ import Tabs from './components/Tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginStack from './components/LoginStack';
 
+
+
 export default function App() {
+
   return (
     <NavigationContainer>
 
@@ -14,5 +17,7 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+
 
 

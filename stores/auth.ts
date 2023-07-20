@@ -1,12 +1,12 @@
 import { create } from 'zustand'
-import { FirebaseAuthTypes }  from '@react-native-firebase/auth/lib/' 
+import { User }  from 'firebase/auth' 
 
 interface AuthState {
-  user: FirebaseAuthTypes.User | null,
-  setUser: (user: FirebaseAuthTypes.User | null) => void
+  user: User | null,
+  setUser: (user: User | null) => void
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
     user: null,
     setUser: (newUser) => set((state) => ({user: newUser}))
-}))
+})) 

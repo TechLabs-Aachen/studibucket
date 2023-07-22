@@ -1,4 +1,4 @@
-import LoginScreen from './LoginScreen';
+import LoginScreen from '../pages/LoginScreen';
 import Tabs from './Tabs';
 import { useAuthStore } from '../stores/auth';
 

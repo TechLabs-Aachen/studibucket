@@ -15,7 +15,7 @@ export default function AddScreen() {
       
       if(user?.uid){
          if(action == "add"){
-         (async()=>{                                                // this method works for async, the name will be added later
+         (async()=>{                                                // Self invoked function. This method works for async, the name will be added later
                await setDoc(doc(db, "users", user.uid), {
                   income: arrayUnion({amount: amount, timestamp: Date()}),     
                }, { merge: true });

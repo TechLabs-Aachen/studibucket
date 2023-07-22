@@ -1,19 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './LoginScreen';
+import LoginScreen from '../pages/LoginScreen';
 import Tabs from './Tabs';
-import { useState } from 'react';
-
-const Stack = createStackNavigator();
+import { useAuthStore } from '../stores/auth';
 
 
 export default function LoginStack() {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const user = useAuthStore((state) => state.user);
     
   return (
     <>
         {
-            isLoggedIn ?
+            user !=null ?
             <Tabs />
             :
             <LoginScreen />

@@ -11,8 +11,7 @@ export default function AddScreen() {
    const user = useAuthStore((state) => state.user )
 
 
-   function pressHandler(action: "add" | "substitute"){
-      
+   function pressHandler(action: "add" | "substitute"){      
       if(user?.uid){
          if(action == "add"){
          (async()=>{                                                // Self invoked function. This method works for async, the name will be added later
@@ -34,17 +33,17 @@ export default function AddScreen() {
 
 
    
-    return (
-     <View>
-         <Text>enter amount</Text>         
-         <TextInput
-               value={amount}
-               onChangeText={setAmount}
-               placeholder='amount'/>  
-         <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("add")}><Text>Add Income</Text></TouchableOpacity>   
-         <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("substitute")}><Text>Add Expense</Text></TouchableOpacity>     
-     </View>
-    );
+   return (
+   <View>
+      <Text>enter amount</Text>         
+      <TextInput
+            value={amount}
+            onChangeText={setAmount}
+            placeholder='amount'/>  
+      <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("add")}><Text>Add Income</Text></TouchableOpacity>   
+      <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("substitute")}><Text>Add Expense</Text></TouchableOpacity>     
+   </View>
+   );
   }
 
 

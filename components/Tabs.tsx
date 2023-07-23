@@ -1,9 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SettingsScreen from '../pages/CashflowScreen';
 import HomeScreen from '../pages/HomeScreen';
 import PlanningScreen from '../pages/PlanningScreen';
 import GroupScreen from '../pages/GroupScreen';
-import AddButton from './AddButton';
 import { View, StyleSheet } from 'react-native';
 import AppStack from '../pages/AppStack';
 import CashflowScreen from '../pages/CashflowScreen';
@@ -19,13 +17,9 @@ export default function MyTabs() {
         <Tab.Screen name="Planning" component={() => <AppStack mainScreen={PlanningScreen}/>} />
         <Tab.Screen name="Group" component={() => <AppStack mainScreen={GroupScreen}/>} />             
        </Tab.Navigator>       
-    </View>
-   
+    </View>   
   );
 }
-
-
-
 
 
 const styles = StyleSheet.create({

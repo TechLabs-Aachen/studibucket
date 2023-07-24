@@ -19,16 +19,16 @@ export default function HomeScreen() {
         // An error happened.
         console.log(error)
       });
-    }
+  }
 
-    return(
-      <View style={styles.container}>
-        <Text>This is the HomeSecreen</Text>
-        <TouchableOpacity onPress={signOutHandle}><Text>Log Out</Text></TouchableOpacity>
-        <Text>{user?.uid}</Text>
-        <AddButton></AddButton>  
-      </View>
-    );    
+  return(
+    <View style={styles.container}>
+      <Text>This is the HomeSecreen</Text>
+      <TouchableOpacity onPress={signOutHandle}><Text>Log Out</Text></TouchableOpacity>
+      <Text>{user?.uid}</Text>
+      <AddButton></AddButton>  
+    </View>
+  );    
 }
 
 

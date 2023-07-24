@@ -24,7 +24,7 @@ export default function LoginScreen(){
               console.log(error)
               setLoading(false)
               // ...
-      });
+            });
   }
 
   useEffect(() =>{
@@ -50,8 +50,7 @@ export default function LoginScreen(){
       secureTextEntry /> 
       <TouchableOpacity style={styles.textInput} onPress={() => anonymus()} disabled={loading}><Text>Log In</Text></TouchableOpacity>
       <Text>{user?.displayName}</Text>        
-    </View>
-      
+    </View>      
   )
 }
 

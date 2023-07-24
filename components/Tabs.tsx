@@ -8,7 +8,7 @@ import CashflowScreen from '../pages/CashflowScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function MyTabs() {
+export default function MyTabs() {  
   return (
     <View style={styles.container}>
       <Tab.Navigator>
@@ -16,7 +16,7 @@ export default function MyTabs() {
         <Tab.Screen name="Cashflow" component={() => <AppStack mainScreen={CashflowScreen}/>} />
         <Tab.Screen name="Planning" component={() => <AppStack mainScreen={PlanningScreen}/>} />
         <Tab.Screen name="Group" component={() => <AppStack mainScreen={GroupScreen}/>} />             
-       </Tab.Navigator>       
+        </Tab.Navigator>       
     </View>   
   );
 }

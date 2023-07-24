@@ -9,7 +9,8 @@ export default function CashflowScreen() {
     const user = useAuthStore((state) => state.user )
 
     useEffect(()=>{
-        if(user?.uid){  const docRef = doc(db, "users", user.uid);   
+        if(user?.uid){  
+            const docRef = doc(db, "users", user.uid);   
             (async()=> {                                            // Self invoking function; in useEffect we cannot have await 
                 const docSnap = await getDoc(docRef);
 

@@ -1,10 +1,15 @@
 
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useAuthStore } from '../stores/auth';
 import { shallow } from 'zustand/shallow';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase'
 import { useEffect, useState } from 'react';
+import * as React from 'react';
+import { TextInput, Button  } from 'react-native-paper';
+
+
+
 
 export default function LoginScreen(){
   const [user, setUser] = useAuthStore((state) => [state.user, state.setUser], shallow )
@@ -40,15 +45,17 @@ export default function LoginScreen(){
     <View style={styles.container}>
       <Text>This is a login Screen</Text>
       <TextInput
+      mode= "outlined"
       value={email}
       onChangeText={setEmail}
-      placeholder='email'/> 
+      label='email'/> 
       <TextInput 
+      mode= "outlined"
       value={password}
       onChangeText={setPassword}
-      placeholder='passwort'
+      label='passwort'
       secureTextEntry /> 
-      <TouchableOpacity style={styles.textInput} onPress={() => anonymus()} disabled={loading}><Text>Log In</Text></TouchableOpacity>
+      <Button style={styles.button} mode='contained' onPress={() => anonymus()} disabled={loading}><Text>Log In</Text></Button>
       <Text>{user?.displayName}</Text>        
     </View>      
   )
@@ -59,16 +66,19 @@ export default function LoginScreen(){
 
 const styles = StyleSheet.create({
   textInput:{
-    borderColor: "black",
+   /*  borderColor: "black",
     height:40,
     borderWidth: 2,
     borderRadius: 5,
-    padding: 5
-  },
+    padding: 5*/
+  }, 
   container: {
     flex: 1,
     backgroundColor: '#ff10',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button:{
+    marginTop: 10,
+  }
 });

@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         color: "white"
     },
     bar:{
-        backgroundColor: "grey"
+        backgroundColor: "grey",
+        borderRadius: 2
     },
     activeBar:{
         backgroundColor: "#E63946"

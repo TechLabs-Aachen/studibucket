@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/auth';
 import { db } from '../firebase';
 import { List, useTheme, Text } from 'react-native-paper'
 import Month from '../components/Month';
+import AddButton from '../components/AddButton';
 
 // ToDo's:
 // Sort data by income and expense (income above)
@@ -106,34 +107,40 @@ export default function CashflowScreen() {
     }, [])
 
     return (
-        <SectionList
-            sections={DATA}
-            keyExtractor={(item) => item.id}
-            renderSectionHeader={({ section: { title } }) => (
-                <Text variant="titleMedium" style={{ color: theme.colors.primary, fontWeight: "700", marginHorizontal: 15, marginTop: 20 }}>{title}</Text>
-            )}
-            renderItem={({ item }) =>
-                <List.Item
-                    style={[styles.item, item.type == "income" && { backgroundColor: theme.colors.primary }]}
-                    titleStyle={item.type == "income" ? { color: theme.colors.onPrimary } : { color: theme.colors.primary }}
-                    title={item.title}
-                    left={() => <List.Icon
-                        color={item.type == "income" ? theme.colors.onPrimary : theme.colors.primary}
-                        icon={item.type == "income" ? "plus" : "minus"} />}
-                    right={() => <Text
-                        style={item.type == "income" ? { color: theme.colors.onPrimary } : { color: theme.colors.primary }}
-                        variant="titleMedium">
-                        {item.money} €
-                    </Text>
-                    }
-                />
-            }
-        />
+        <View  style={styles.container}>      
+            <SectionList
+                sections={DATA}
+                keyExtractor={(item) => item.id}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text variant="titleMedium" style={{ color: theme.colors.primary, fontWeight: "700", marginHorizontal: 15, marginTop: 20 }}>{title}</Text>
+                )}
+                renderItem={({ item }) =>
+                    <List.Item
+                        style={[styles.item, item.type == "income" && { backgroundColor: theme.colors.primary }]}
+                        titleStyle={item.type == "income" ? { color: theme.colors.onPrimary } : { color: theme.colors.primary }}
+                        title={item.title}
+                        left={() => <List.Icon
+                            color={item.type == "income" ? theme.colors.onPrimary : theme.colors.primary}
+                            icon={item.type == "income" ? "plus" : "minus"} />}
+                        right={() => <Text
+                            style={item.type == "income" ? { color: theme.colors.onPrimary } : { color: theme.colors.primary }}
+                            variant="titleMedium">
+                            {item.money} €
+                        </Text>
+                        }
+                    />
+                }
+            />
+            <AddButton></AddButton>  
+         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
+    container:{
+        height: "100%",
+    },
     item: {
         borderRadius: 8,
         paddingVertical: 3,

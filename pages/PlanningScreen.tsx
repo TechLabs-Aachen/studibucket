@@ -74,14 +74,11 @@ const styles = StyleSheet.create({
         gap: 15
     },
     item: {
-       
         paddingVertical: 3,
         paddingHorizontal: 8,
         marginHorizontal: 8,
-        marginVertical: 4,
-      
+        marginVertical: 4, 
     },
-
 })
 
 

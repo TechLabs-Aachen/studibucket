@@ -14,7 +14,7 @@ export default function LoginStack() {
         // <Tabs />
         // :
         // <LoginScreen />
-        <Tabs />
+        <PlanningScreen />
       }
     </>
   );

@@ -35,6 +35,9 @@ export default function Buckets  (props: BucketsProps) {
 const styles = StyleSheet.create({
     bucket:{
         borderRadius: 8,
+        shadowColor: "rgba(0, 0, 0, 0.25)",
+        shadowOffset: { width: 2, height: 2 },
+        shadowRadius: 7 
     },
    
     bar:{

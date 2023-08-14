@@ -55,7 +55,7 @@ export default function PlanningScreen() {
             sections={DATA}
             keyExtractor={(item) => item.id}
             renderSectionHeader={({ section: { title } }) => (
-                <Text variant="titleMedium" style={{ color: theme.colors.primary, fontWeight: "700", marginHorizontal: 15, marginTop: 20 }}>{title}</Text>
+                <Text variant="titleLarge" style={{ color: theme.colors.primary, fontWeight: "800", marginHorizontal: 15, marginTop: 20 }}>{title}</Text>
             )}
             renderItem={({ item }) =>
                 <View style={styles.item}>

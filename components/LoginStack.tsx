@@ -1,6 +1,7 @@
 import LoginScreen from '../pages/LoginScreen';
 import Tabs from './Tabs';
 import { useAuthStore } from '../stores/auth';
+import PlanningScreen from '../pages/PlanningScreen';
 
 
 export default function LoginStack() {

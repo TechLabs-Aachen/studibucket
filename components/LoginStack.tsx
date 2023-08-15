@@ -10,10 +10,7 @@ export default function LoginStack() {
   return (
     <>
       {
-        // user !=null ?
-        // <Tabs />
-        // :
-        // <LoginScreen />
+        // user !=null ? <Tabs />  : <LoginScreen />
         <Tabs />
       }
     </>

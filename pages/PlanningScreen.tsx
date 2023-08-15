@@ -26,7 +26,7 @@ const passiveBucketsData = [
     {
         id: '3',
         title: "Trip to Bali",
-        currentAmount: 2000.00,
+        currentAmount: 1000.00,
         goalAmount: 2000.00, 
         type: "passive"
     },
@@ -84,10 +84,3 @@ const styles = StyleSheet.create({
 
 
 
-
-{/* <View style={styles.bucket}>
-            <Text>This is the Bucket</Text>
-            <Buckets title='Vacation' currentAmount={50.00} goalAmount={300.00} date={new Date()} active/>
-            <Buckets title='Car' currentAmount={5000.00} goalAmount={10000.00} date={new Date()} active/>
-            <Buckets title='Trip to bali' currentAmount={2000.00} goalAmount={2000.00} date={new Date()}/>
-        </View> */}

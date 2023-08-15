@@ -11,7 +11,7 @@ type BucketsProps = {
     active?: boolean,
 }
 
-export default function Buckets  (props: BucketsProps) {
+export default function Buckets(props: BucketsProps) {
 
     const theme= useTheme();
 

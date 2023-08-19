@@ -26,7 +26,7 @@ export default function HomeScreen() {
       <Text>This is the Home Screen</Text>
       <TouchableOpacity onPress={signOutHandler}><Text>Log Out</Text></TouchableOpacity>
       <Text>{user?.uid}</Text>
-      <AddButton></AddButton>  
+      
     </View>
   );    
 }

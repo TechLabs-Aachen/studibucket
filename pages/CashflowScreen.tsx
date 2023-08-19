@@ -131,7 +131,7 @@ export default function CashflowScreen() {
                     />
                 }
             />
-            <AddButton></AddButton>  
+           
          </View>
     );
 }

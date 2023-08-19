@@ -10,7 +10,7 @@ import AddButton from '../components/AddButton';
 export default function HomeScreen() {
   const [user, setUser] = useAuthStore((state) => [state.user, state.setUser])
 
-  function signOutHandle() {
+  function signOutHandler() {
       signOut(auth).then(() => {
         // Sign-out successful.
         setUser(null)
@@ -23,8 +23,8 @@ export default function HomeScreen() {
 
   return(
     <View style={styles.container}>
-      <Text>This is the HomeSecreen</Text>
-      <TouchableOpacity onPress={signOutHandle}><Text>Log Out</Text></TouchableOpacity>
+      <Text>This is the Home Screen</Text>
+      <TouchableOpacity onPress={signOutHandler}><Text>Log Out</Text></TouchableOpacity>
       <Text>{user?.uid}</Text>
       <AddButton></AddButton>  
     </View>

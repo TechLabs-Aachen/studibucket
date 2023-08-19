@@ -13,20 +13,20 @@ export default function AddScreen() {
 
    function pressHandler(action: "add" | "substitute"){      
       if(user?.uid){
-         if(action == "add"){
-         (async()=>{                                                // Self invoked function. This method works for async, the name will be added later
-               await setDoc(doc(db, "users", user.uid), {
-                  income: arrayUnion({amount: amount, timestamp: Date()}),     
-               }, { merge: true });
-               console.log("debug 1")
-         })()
-         } else if(action == "substitute"){
-            (async()=>{                                                
+         if(action == "add"){               
+            (async()=>{                                                // Self invoked function. This method works for async, the name will be added later
                   await setDoc(doc(db, "users", user.uid), {
-                     expense: arrayUnion({amount: amount, timestamp: Date()}),     
+                     income: arrayUnion({amount: amount, timestamp: Date()}),     
                   }, { merge: true });
-                  console.log("debug 2")
+                  console.log("debug 1")
             })()
+            } else if(action == "substitute"){
+               (async()=>{                                                
+                     await setDoc(doc(db, "users", user.uid), {
+                        expense: arrayUnion({amount: amount, timestamp: Date()}),     
+                     }, { merge: true });
+                     console.log("debug 2")
+               })()
          }    
       }
    }
@@ -34,15 +34,15 @@ export default function AddScreen() {
 
    
    return (
-   <View>
-      <Text>enter amount</Text>         
-      <TextInput
-            value={amount}
-            onChangeText={setAmount}
-            placeholder='amount'/>  
-      <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("add")}><Text>Add Income</Text></TouchableOpacity>   
-      <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("substitute")}><Text>Add Expense</Text></TouchableOpacity>     
-   </View>
+      <View>
+         <Text>enter amount</Text>         
+         <TextInput
+               value={amount}
+               onChangeText={setAmount}
+               placeholder='amount'/>  
+         <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("add")}><Text>Add Income</Text></TouchableOpacity>   
+         <TouchableOpacity style={styles.textInput} onPress={() => pressHandler("substitute")}><Text>Add Expense</Text></TouchableOpacity>     
+      </View>
    );
   }
 

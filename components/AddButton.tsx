@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom:-10,
     zIndex: 10,
-    left: 180
+    left: 170
   },
   text: {
     fontSize: 70

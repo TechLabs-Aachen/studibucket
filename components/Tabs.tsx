@@ -8,8 +8,9 @@ import CashflowScreen from "../pages/CashflowScreen";
 import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AddButton from "./AddButton";
-import AddModalScreen from "./AddModalScreen";
+import AddModalScreen from "../pages/AddModalScreen";
 import { List, Text, useTheme } from "react-native-paper";
+import AddBucketModalScreen from "../pages/AddBucketModalScreen";
 
 const PayScreenComponent = () => {
   return null;
@@ -123,7 +124,7 @@ export default function MyTabs() {
           name="Add"
           component={() => null}
           options={{
-            tabBarButton: () => <AddModalScreen></AddModalScreen>,
+            tabBarButton: () => <AddBucketModalScreen></AddBucketModalScreen>,
           }}
         />
         <Tab.Screen

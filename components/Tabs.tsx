@@ -124,7 +124,7 @@ export default function MyTabs() {
           name="Add"
           component={() => null}
           options={{
-            tabBarButton: () => <AddBucketModalScreen></AddBucketModalScreen>,
+            tabBarButton: () => <AddModalScreen></AddModalScreen>,
           }}
         />
         <Tab.Screen

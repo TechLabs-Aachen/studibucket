@@ -49,6 +49,9 @@ export default function AddBucketModalScreen() {
 
   return (
     <>
+      <Button mode="contained" onPress={showModal} disabled={false}>
+        +
+      </Button>
       <Portal>
         <Modal
           visible={modalVisible}
@@ -82,16 +85,6 @@ export default function AddBucketModalScreen() {
           </Button>
         </Modal>
       </Portal>
-
-      <IconButton
-        onPress={() => {
-          showModal();
-          console.log("debug 222");
-        }}
-        icon="plus"
-        mode="contained"
-        size={70}
-      />
     </>
   );
 }

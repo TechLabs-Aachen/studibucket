@@ -1,7 +1,14 @@
 import { DatePickerInput } from "react-native-paper-dates";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, StyleSheet, TextInput as RNTextInput, SectionList, FlatList, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput as RNTextInput,
+  SectionList,
+  FlatList,
+  Pressable,
+} from "react-native";
 import {
   TextInput as RNPTextInput,
   Button,
@@ -12,20 +19,16 @@ import {
 } from "react-native-paper";
 import { List, Text, useTheme } from "react-native-paper";
 import Buckets from "../components/Buckets";
-import { doc, getDoc, getDocs, collection, addDoc } from "firebase/firestore"
+import { doc, getDoc, getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuthStore } from "../stores/auth";
-
+import { shallow } from "zustand/shallow";
 
 // ToDo: styling selected bucket  *
 
-
-
-
-
 export default function AddModalScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [buckets, setBuckets] = useState<any>([ ])
+  const [buckets, setBuckets] = useState<any>([]);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const [inOut, setInOut] = React.useState("out");
@@ -33,19 +36,21 @@ export default function AddModalScreen() {
   const [selectedBucketID, setSelectedBucketID] = useState("");
   const [inputDate, setInputDate] = React.useState(new Date());
   const [title, setTitle] = React.useState("");
-  const user = useAuthStore((state) => state.user);
+  const user = useAuthStore((state) => state.user, shallow);
   const theme = useTheme();
 
-
-  function pressHandler() {  
+  function pressHandler() {
     if (user?.uid) {
       (async () => {
         // Self invoked function. This method works for async, the name will be added later
-        await addDoc(collection(db, "users", user.uid, "buckets", selectedBucketID, inOut), {
-          title,
-          amount,
-          inputDate,          
-        });
+        await addDoc(
+          collection(db, "users", user.uid, "buckets", selectedBucketID, inOut),
+          {
+            title,
+            amount,
+            inputDate,
+          }
+        );
         console.log("debug 1");
         hideModal();
       })();
@@ -53,60 +58,60 @@ export default function AddModalScreen() {
   }
 
   useEffect(() => {
+    // const docRef = doc(db, "users", user!.uid, "buckets");
 
-   // const docRef = doc(db, "users", user!.uid, "buckets");  
-
-    const asycFunc = (async () => {
-      const querySnapshot = await getDocs(collection(db, "users", user!.uid, "buckets"));      
+    const asycFunc = async () => {
+      const querySnapshot = await getDocs(
+        collection(db, "users", user!.uid, "buckets")
+      );
       const newBuckets = querySnapshot.docs.map((doc) => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
-        const data = doc.data()      
+        const data = doc.data();
 
-        return {id:doc.id, title: data.title, currentAmount: 0, goalAmount: data.goalAmount, type: "active"}
+        return {
+          id: doc.id,
+          title: data.title,
+          currentAmount: 0,
+          goalAmount: data.goalAmount,
+          type: "active",
+        };
       });
 
-      setBuckets(newBuckets)
-      console.log(buckets)
+      setBuckets(newBuckets);
+      console.log(buckets);
+    };
 
-    }) 
-
-    if(modalVisible) {
-      asycFunc()
+    if (modalVisible) {
+      asycFunc();
     } else {
-      setAmount("0")
+      setAmount("0");
       setInOut("out");
       setTitle("");
       setInputDate(new Date());
-      setSelectedBucketID("")
+      setSelectedBucketID("");
     }
-    
-  },[modalVisible])
-
-
-
-
-
-
+  }, [modalVisible]);
 
   return (
     <>
-      <Portal >
+      <Portal>
         <Modal
           visible={modalVisible}
           onDismiss={hideModal}
           contentContainerStyle={styles.content}
           style={styles.modal}
         >
-         
-         <View style={styles.header}>
-          <Text variant="displaySmall">Add</Text>
-          <Button mode="contained" onPress={pressHandler} disabled={!selectedBucketID} >
-            Save
-          </Button>
-         </View>
-        
-
+          <View style={styles.header}>
+            <Text variant="displaySmall">Add</Text>
+            <Button
+              mode="contained"
+              onPress={pressHandler}
+              disabled={!selectedBucketID}
+            >
+              Save
+            </Button>
+          </View>
 
           <SegmentedButtons
             value={inOut}
@@ -127,8 +132,8 @@ export default function AddModalScreen() {
             onChangeText={setAmount}
             style={styles.amountText}
           />
-          
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
             <DatePickerInput
               locale="en"
               label="Date"
@@ -151,17 +156,28 @@ export default function AddModalScreen() {
 
           <Text variant="displaySmall">Assign to Buckets</Text>
 
-         
           <FlatList
             data={buckets}
             style={styles.flatlist}
-            keyExtractor={(item) => item.id}          
-            renderItem={({ item }) =>
-              <Pressable style={styles.item} onPress={() => setSelectedBucketID(item.id)} >                         
-                  <Buckets title={item.title} currentAmount={item.currentAmount} goalAmount={item.goalAmount} date={new Date()} active={item.type=="active"}/>
-              </Pressable>                
-            }
-        />
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Pressable
+                style={[
+                  styles.item,
+                  selectedBucketID === item.id ? styles.itemSelected : null,
+                ]}
+                onPress={() => setSelectedBucketID(item.id)}
+              >
+                <Buckets
+                  title={item.title}
+                  currentAmount={item.currentAmount}
+                  goalAmount={item.goalAmount}
+                  date={new Date()}
+                  active={item.type == "active"}
+                />
+              </Pressable>
+            )}
+          />
         </Modal>
       </Portal>
 
@@ -194,11 +210,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 17,
     borderTopLeftRadius: 17,
   },
-  modal:{
-    justifyContent: "flex-end"
+  modal: {
+    justifyContent: "flex-end",
   },
-  datePicker:{
-    flexGrow: 0
+  datePicker: {
+    flexGrow: 0,
   },
   contentTitle: {
     fontSize: 20,
@@ -216,26 +232,31 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
     borderRadius: 100,
   },
-  bucket:{
+  bucket: {
     flex: 1,
     margin: 12,
-    gap: 15
+    gap: 15,
   },
-  flatlist:{
+  flatlist: {
     flex: 1,
-    alignSelf: "stretch"
+    alignSelf: "stretch",
   },
   item: {
-      paddingVertical: 3,
-      paddingHorizontal: 8,
-      marginHorizontal: 8,
-      marginVertical: 4, 
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    marginHorizontal: 8,
+    marginVertical: 4,
   },
-  header:{
-    flexDirection:"row",
+  itemSelected: {
+    borderWidth: 3,
+    borderRadius: 8,
+    borderColor: "red",
+  },
+  header: {
+    flexDirection: "row",
     alignSelf: "stretch",
-    justifyContent:"space-between"
-  }
+    justifyContent: "space-between",
+  },
 });
 
 // tabBarIcon: ({ color, size }) => {

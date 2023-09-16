@@ -3,8 +3,11 @@ import { auth } from '../firebase'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuthStore } from '../stores/auth';
 import AddButton from '../components/AddButton';
-
-
+import DoughnutCharts from '../components/DoughnutCharts';
+import { WithSkiaWeb } from "@shopify/react-native-skia/lib/module/web"
+import { Canvas } from '@shopify/react-native-skia';
+import { ComponentType } from 'react';
+import { version } from 'canvaskit-wasm/package.json';
 
 
 export default function HomeScreen() {
@@ -24,6 +27,12 @@ export default function HomeScreen() {
   return(
     <View style={styles.container}>
       <Text>This is the Home Screen</Text>
+        
+      <WithSkiaWeb
+      getComponent={() => import("../components/DoughnutCharts")}
+      fallback={<Text>Loading Skia...</Text>}
+    />
+      
       <TouchableOpacity onPress={signOutHandler}><Text>Log Out</Text></TouchableOpacity>
       <Text>{user?.uid}</Text>
       
@@ -55,3 +64,41 @@ const styles = StyleSheet.create({
   }
 });
 
+
+
+// <WithSkiaWeb
+//         getComponent={() => { 
+
+//           function doughnutCharts(){
+//             const propObj = {
+//               radius: 120,
+//               arcs: [],
+//               strokeWidth: 10           }           
+          
+//           return (      
+//             <View style={{height: propObj.radius*3, width: propObj.radius*3, alignSelf:'center', backgroundColor:"red"}}>
+//               <Canvas style={{ flex: 1, alignSelf: 'stretch', backgroundColor: "blue" }}>
+//               </Canvas>
+//             </View>
+//           );  
+//           }
+
+//           const defaultExport = {default: doughnutCharts as ComponentType}
+
+//           const result = new Promise<{default: ComponentType}>((resolve, reject)=> {
+//             resolve(defaultExport)
+//           }) 
+         
+//           return result
+
+//         }}
+//         fallback={<Text>Loading Skia...</Text>}
+//       />
+
+
+
+
+{/* <WithSkiaWeb
+opts={{ locateFile: (file) => `https://cdn.jsdelivr.net/npm/canvaskit-wasm@${version}/bin/full/${file}` }}
+getComponent={() => import("../components/DoughnutCharts")}
+/> */}

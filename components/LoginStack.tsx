@@ -6,5 +6,6 @@ import PlanningScreen from "../pages/BucketsScreen";
 export default function LoginStack() {
   const user = useAuthStore((state) => state.user);
 
-  return <>{user != null ? <Tabs /> : <LoginScreen />}</>;
+ return <>{user != null ? <Tabs /> : <LoginScreen />}</>;
+//  return <Tabs />
 }

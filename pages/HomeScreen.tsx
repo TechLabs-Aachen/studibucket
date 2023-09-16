@@ -29,9 +29,10 @@ export default function HomeScreen() {
       <Text>This is the Home Screen</Text>
         
       <WithSkiaWeb
-      getComponent={() => import("../components/DoughnutCharts")}
-      fallback={<Text>Loading Skia...</Text>}
-    />
+        getComponent={() => import("../components/DoughnutCharts")}
+        opts={{ locateFile: (file) => `https://cdn.jsdelivr.net/npm/canvaskit-wasm@${version}/bin/full/${file}` }}
+        fallback={<Text>Loading Skia...</Text>}
+      />
       
       <TouchableOpacity onPress={signOutHandler}><Text>Log Out</Text></TouchableOpacity>
       <Text>{user?.uid}</Text>

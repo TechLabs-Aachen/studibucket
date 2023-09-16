@@ -7,59 +7,63 @@ import { db } from "../firebase";
 import { useAuthStore } from "../stores/auth";
 import { shallow } from "zustand/shallow";
 
-const activeBucketsData = [
-  {
-    id: "1",
-    title: "Vacation",
-    currentAmount: 50,
-    goalAmount: 300.0,
-    type: "active",
-  },
-  {
-    id: "2",
-    title: "Car",
-    currentAmount: 5000.0,
-    goalAmount: 10000.0,
-    type: "active",
-  },
-];
+// const activeBucketsData = [
+//   {
+//     id: "1",
+//     title: "Vacation",
+//     currentAmount: 50,
+//     goalAmount: 300.0,
+//     type: "active",
+//   },
+//   {
+//     id: "2",
+//     title: "Car",
+//     currentAmount: 5000.0,
+//     goalAmount: 10000.0,
+//     type: "active",
+//   },
+// ];
 
-const passiveBucketsData = [
-  {
-    id: "3",
-    title: "Trip to Bali",
-    currentAmount: 1000.0,
-    goalAmount: 2000.0,
-    type: "passive",
-  },
-];
+// const passiveBucketsData = [
+//   {
+//     id: "3",
+//     title: "Trip to Bali",
+//     currentAmount: 1000.0,
+//     goalAmount: 2000.0,
+//     type: "passive",
+//   },
+// ];
 
-const DATA = [
-  {
-    title: "Active Buckets",
-    data: activeBucketsData,
-  },
-  {
-    title: "Past Buckets",
-    data: passiveBucketsData,
-  },
-];
+// const DATA = [
+//   {
+//     title: "Active Buckets",
+//     data: activeBucketsData,
+//   },
+//   {
+//     title: "Past Buckets",
+//     data: passiveBucketsData,
+//   },
+// ];
 
 export default function BucketsScreen() {
   const theme = useTheme();
   const user = useAuthStore((state) => state.user, shallow);
   const [buckets, setBuckets] = useState<any>([]);
 
+  const todayDate = new Date()
+
   const DATA = [
     {
       title: "Active Buckets",
-      data: buckets,
+      data: buckets.filter((bucket: any)=> bucket.date.getTime() > todayDate.getTime() ),
     },
     {
       title: "Past Buckets",
-      data: buckets,
+      data: buckets.filter((bucket: any)=> bucket.date.getTime() < todayDate.getTime() ),
     },
   ];
+
+ 
 
   useEffect(() => {
     // const docRef = doc(db, "users", user!.uid, "buckets");

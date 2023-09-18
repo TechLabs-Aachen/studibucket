@@ -1,18 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../pages/HomeScreen";
-import PlanningScreen from "../pages/BucketsScreen";
 import GroupScreen from "../pages/GroupScreen";
 import { View, StyleSheet, TouchableOpacity, Touchable } from "react-native";
 import AppStack from "../pages/AppStack";
 import CashflowScreen from "../pages/CashflowScreen";
 import { BottomNavigation, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import AddButton from "./AddButton";
 import AddModalScreen from "../pages/AddModalScreen";
 import { List, Text, useTheme } from "react-native-paper";
 import AddBucketModalScreen from "../pages/AddBucketModalScreen";
 import BucketsScreen from "../pages/BucketsScreen";
-import AddBucketButton from "./AddBucketButton";
 
 const PayScreenComponent = () => {
   return null;

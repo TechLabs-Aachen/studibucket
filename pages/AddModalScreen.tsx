@@ -162,10 +162,7 @@ export default function AddModalScreen() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Pressable
-                style={[
-                  styles.item,
-                  selectedBucketID === item.id ? styles.itemSelected : null,
-                ]}
+                style={[styles.item]}
                 onPress={() => setSelectedBucketID(item.id)}
               >
                 <Buckets
@@ -174,6 +171,7 @@ export default function AddModalScreen() {
                   goalAmount={item.goalAmount}
                   date={new Date()}
                   active={item.type == "active"}
+                  isClicked={selectedBucketID === item.id}
                 />
               </Pressable>
             )}

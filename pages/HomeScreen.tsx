@@ -2,15 +2,15 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useAuthStore } from "../stores/auth";
-import AddButton from "../components/AddButton";
-import DoughnutCharts from "../components/DoughnutCharts";
 import { WithSkiaWeb } from "@shopify/react-native-skia/lib/module/web";
-import { Canvas } from "@shopify/react-native-skia";
-import { ComponentType } from "react";
 import { version } from "canvaskit-wasm/package.json";
+import { shallow } from "zustand/shallow";
 
 export default function HomeScreen() {
-  const [user, setUser] = useAuthStore((state) => [state.user, state.setUser]);
+  const [user, setUser] = useAuthStore(
+    (state) => [state.user, state.setUser],
+    shallow
+  );
 
   function signOutHandler() {
     signOut(auth)

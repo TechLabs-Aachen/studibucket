@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   clickedBucket: {
     borderRadius: 8,
-    borderColor: "rgba(11, 141, 56, 0.8)",
+    borderColor: "rgba(119, 151, 123, 0.8)",
     borderWidth: 7,
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: { width: 2, height: 2 },

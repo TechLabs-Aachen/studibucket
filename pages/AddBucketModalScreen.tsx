@@ -23,6 +23,7 @@ import { db } from "../firebase";
 import { useAuthStore } from "../stores/auth";
 
 export default function AddBucketModalScreen() {
+  const theme = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
@@ -50,7 +51,7 @@ export default function AddBucketModalScreen() {
   return (
     <>
       <Button mode="contained" onPress={showModal} disabled={false}>
-        +
+        <Icon name="plus" size={24} color={theme.colors.onPrimary} />
       </Button>
       <Portal>
         <Modal

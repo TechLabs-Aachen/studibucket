@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, FlatList, SectionList } from "react-native";
-import { doc, getDoc } from "firebase/firestore";
+import { Timestamp, collection, collectionGroup, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { useAuthStore } from "../stores/auth";
 import { db } from "../firebase";
 import { List, useTheme, Text } from "react-native-paper";
 import { shallow } from "zustand/shallow";
+import { groupBy, mapToArray } from "./utils/arrayUtils";
 
 // ToDo's:
 // Sort data by income and expense (income above)
@@ -81,31 +82,78 @@ const DATA = [
   },
 ];
 
+type Position = {
+    id: string,
+    title: string,
+    money: number,
+    inputDate: Timestamp,
+    sectionKey: string,
+    type: "in" | "out", 
+}
+
 export default function CashflowScreen() {
   const user = useAuthStore((state) => state.user, shallow);
   const theme = useTheme();
+  const [cashFlowPositions, setCashFlowPositions] = useState<any>([]);
+  const cashFlowSectionsMap = groupBy<string, Position>(cashFlowPositions, (i) => i.sectionKey) 
+  const cashFlowSectionsArray = mapToArray(cashFlowSectionsMap, (k, v) => {
+    return ({
+      title: k,
+      data: v,
+  }) })
 
+  console.log("cashArray",cashFlowSectionsArray)
   useEffect(() => {
-    if (user?.uid) {
-      const docRef = doc(db, "users", user.uid);
-      (async () => {
-        // Self invoking function; in useEffect we cannot have await
-        const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-        } else {
-          // docSnap.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      })();
+    const asyncFunc = async () => {
+      const income = query(collectionGroup(db, 'in'));
+      const expenses = query(collectionGroup(db, 'out'));
+      const queryIncomeSnapshot = await getDocs(income);
+      const queryExpensesSnapshot = await getDocs(expenses);
+      
+
+      const newIncomePositions = queryIncomeSnapshot.docs.map((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        const data = doc.data();
+        const inputDate = data.inputDate.toDate();
+        const inputMonth = inputDate.getMonth();
+        const inputYear = inputDate.getYear();
+
+        const sectionKey = `${inputYear}-${inputMonth}`
+        const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "in"}
+        return position;
+      })
+
+      const newExpensesPositions = queryExpensesSnapshot.docs.map((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        const data = doc.data();
+        const inputDate = data.inputDate.toDate();
+        const inputMonth = inputDate.getMonth();
+        const inputYear = inputDate.getYear();
+
+        const sectionKey = `${inputYear}-${inputMonth}`
+        const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "out"}
+        return position;
+      })
+
+      const newPositions = newIncomePositions.concat(newExpensesPositions);
+
+
+        console.log("newPositions", newPositions);
+        setCashFlowPositions(newPositions);
+    };
+
+    if (user?.uid) {
+      asyncFunc();
     }
   }, []);
 
   return (
     <View style={styles.container}>
       <SectionList
-        sections={DATA}
+        sections={cashFlowSectionsArray}
         keyExtractor={(item) => item.id}
         renderSectionHeader={({ section: { title } }) => (
           <Text
@@ -124,12 +172,12 @@ export default function CashflowScreen() {
           <List.Item
             style={[
               styles.item,
-              item.type == "income" && {
+              item.type == "in" && {
                 backgroundColor: theme.colors.primary,
               },
             ]}
             titleStyle={
-              item.type == "income"
+              item.type == "in"
                 ? { color: theme.colors.onPrimary }
                 : { color: theme.colors.primary }
             }
@@ -137,17 +185,17 @@ export default function CashflowScreen() {
             left={() => (
               <List.Icon
                 color={
-                  item.type == "income"
+                  item.type == "in"
                     ? theme.colors.onPrimary
                     : theme.colors.primary
                 }
-                icon={item.type == "income" ? "plus" : "minus"}
+                icon={item.type == "in" ? "plus" : "minus"}
               />
             )}
             right={() => (
               <Text
                 style={
-                  item.type == "income"
+                  item.type == "in"
                     ? { color: theme.colors.onPrimary }
                     : { color: theme.colors.primary }
                 }

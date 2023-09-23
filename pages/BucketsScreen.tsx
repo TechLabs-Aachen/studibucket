@@ -64,7 +64,7 @@ export default function BucketsScreen() {
   useEffect(() => {
     // const docRef = doc(db, "users", user!.uid, "buckets");
 
-    const asycFunc = async () => {
+    const asyncFunc = async () => {
       const querySnapshot = await getDocs(
         collection(db, "users", user!.uid, "buckets")
       );
@@ -87,7 +87,7 @@ export default function BucketsScreen() {
       setBuckets(newBuckets);
     };
 
-    asycFunc();
+    asyncFunc();
   }, []);
 
   return (

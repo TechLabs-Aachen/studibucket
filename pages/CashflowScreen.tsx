@@ -89,7 +89,10 @@ type Position = {
     inputDate: Timestamp,
     sectionKey: string,
     type: "in" | "out", 
-}
+};
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 
 export default function CashflowScreen() {
   const user = useAuthStore((state) => state.user, shallow);
@@ -118,9 +121,9 @@ export default function CashflowScreen() {
         const data = doc.data();
         const inputDate = data.inputDate.toDate();
         const inputMonth = inputDate.getMonth();
-        const inputYear = inputDate.getYear();
+        const inputYear = inputDate.getFullYear();
 
-        const sectionKey = `${inputYear}-${inputMonth}`
+        const sectionKey = `${inputYear} ${months[inputMonth]}`
         const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "in"}
         return position;
       })
@@ -131,9 +134,9 @@ export default function CashflowScreen() {
         const data = doc.data();
         const inputDate = data.inputDate.toDate();
         const inputMonth = inputDate.getMonth();
-        const inputYear = inputDate.getYear();
+        const inputYear = inputDate.getFullYear();
 
-        const sectionKey = `${inputYear}-${inputMonth}`
+        const sectionKey = `${inputYear} ${months[inputMonth]}`
         const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "out"}
         return position;
       })

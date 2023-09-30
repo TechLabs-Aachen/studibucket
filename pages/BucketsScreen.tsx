@@ -34,30 +34,22 @@ const passiveBucketsData = [
   },
 ];
 
-const DATA = [
-  {
-    title: "Active Buckets",
-    data: activeBucketsData,
-  },
-  {
-    title: "Past Buckets",
-    data: passiveBucketsData,
-  },
-];
+
 
 export default function BucketsScreen() {
   const theme = useTheme();
   const user = useAuthStore((state) => state.user, shallow);
   const [buckets, setBuckets] = useState<any>([]);
+  const dateToday = new Date(); 
 
   const DATA = [
     {
       title: "Active Buckets",
-      data: buckets,
+      data: buckets.filter((bucket: any) => bucket.date >= dateToday),
     },
     {
       title: "Past Buckets",
-      data: buckets,
+      data: buckets.filter((bucket: any) => bucket.date < dateToday),
     },
   ];
 
@@ -80,11 +72,39 @@ export default function BucketsScreen() {
           date: data.inputDate.toDate(),
           goalAmount: data.amount,
           type: "active",
+          in: data.in,
+          out: data.out,
         };
       });
 
-      console.log("!!!", newBuckets);
-      setBuckets(newBuckets);
+      const finalBuckets = newBuckets.map(async newBucket => {
+        const inSnapshot = await getDocs(
+          collection(db, "users", user!.uid, "buckets", newBucket.id, "in")
+        );
+  
+        const outSnapshot = await getDocs(
+          collection(db, "users", user!.uid, "buckets", newBucket.id, "out")
+        );
+        
+        const newInDocs = inSnapshot.docs.map((doc) => Number(doc.data().amount.replace(",", ".")));
+        const inAmount = newInDocs.reduce((acc, cur) => acc + cur, 0);
+  
+        const newOutDocs = outSnapshot.docs.map((doc) => Number(doc.data().amount.replace(",", ".")));
+        const outAmount = newOutDocs.reduce((acc, cur) => acc + cur, 0);
+  
+        const currentAmount = inAmount - outAmount;
+        const type = currentAmount >= newBucket.goalAmount ? "active" : "passive";
+  
+        console.log(newBucket.title, inAmount, outAmount)
+        return {...newBucket, currentAmount, type}
+
+      })
+
+      const result = await Promise.all(finalBuckets);
+
+      console.log("finalBuckets:", result);
+      setBuckets(result);
+
     };
 
     asyncFunc();

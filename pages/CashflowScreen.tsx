@@ -82,7 +82,7 @@ const DATA = [
   },
 ];
 
-type Position = {
+export type Position = {
     id: string,
     title: string,
     money: number,

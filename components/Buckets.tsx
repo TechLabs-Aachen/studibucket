@@ -29,7 +29,7 @@ export default function Buckets(props: BucketsProps) {
             props.active && { backgroundColor: theme.colors.error },
           ]}
           progress={
-            props.active ? 1 - props.currentAmount / props.goalAmount : 1
+             props.currentAmount / props.goalAmount 
           }
           color={props.active ? theme.colors.onPrimary : theme.colors.primary}
         />
@@ -49,7 +49,8 @@ export default function Buckets(props: BucketsProps) {
           ]}
           variant="bodyMedium"
         >
-          {props.currentAmount} € {props.active ? "until " : "reached on "}
+          {`balance: ${props.currentAmount}€, goal: ${props.goalAmount}€ `}
+          {!props.active ? "until " : "reached on "}
           {props.date.toLocaleDateString()}
         </Text>
       </Card.Content>

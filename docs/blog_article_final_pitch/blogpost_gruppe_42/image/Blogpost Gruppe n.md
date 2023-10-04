@@ -3,15 +3,11 @@
 
 ## Introduction
 
-(Here you introduce the reader to your problem. It might help to add an image to clear things up. What’s your project about? What’s the topic? What problem does your project solve?)
-
 Our project is a budgeting mobile app for students to manage their finances and to make economical plans. In modern time, it could be excruciatingly difficult for students to track their daily expences and make future saving plans. Our mobile app solves this problem in that it allows users to organise and monitor their income streams, expences and savings by employing "buckets", hence the name Studibucket. Buckets are analogical to piggy banks, which could be dynamically allocated to proportions of income and expenditure to facilitate making financial decision, such as vacations, laptops etc...
 
 ![image1.jpg](../_resources/piggy_bank.jpg)
 
 ## Method
-
-(Here you show how you solved the problem. Maybe you want to show some bulletpoints to guide the reader through What methods were used to solve the problem? What was your approach?)
 
 In the beginning, we chose the React Native framework to build our mobile app for the reason of having learned the popular React.js framework in the learning phase of the TechLabs bootcamp and unlike other mobile app frameworks such as Flutter or Svelte, considerably major amount knowledge of React.js can be carried over in mobile app development which makes it highly practical for us students to extend our knowledge in frontend web development. Typescript is chosen because of the type safety and debugging comfort it provides.
 
@@ -32,106 +28,45 @@ We chose prominent popular Zustand for state management because of its relativel
 ![image3.gif](../_resources/Figma.png)
 Design in Figma (make it center)
 
-![image3.gif](../_resources/Figma.png)  (add picture of the actual app)
+(add picture of the actual app)
 
-It's also possible to add a .gif But this should be used with caution! It can get distracting and unprofessional easily.
+### Review of the tools and frameworks in detail
 
+TypeScript, chosen for Studibucket, enhances code quality by adding static typing to JavaScript. This ensures early error detection, reducing runtime bugs and improving maintainability. However, TypeScript might require a slight learning curve, especially for developers new to static typing. Overall, it's a valuable tool for robust and scalable app development.
+
+React Native offered several advantages for our project. It facilitated code reusability between the web and mobile app, reducing development time and effort. The framework benefits from a large and active community, providing access to a wealth of libraries, tools, and resources. Additionally, React Native allowed us to target both iOS and Android platforms simultaneously.
+
+On the downside, React Native had some limitations, particularly in handling complex native features. While it supported native module integration, intricate native functionalities might require custom native code. Additionally, for graphics-intensive applications, performance could be a concern.
+
+To streamline development and testing, we relied on the Expo SDK, which provided real-time emulation and browser-based debugging. Expo simplified the development process, allowing us to focus on building features rather than dealing with complex configurations. This approach expedited our development process and enabled us to deliver a robust app.
+
+However, Expo did have its limitations. It offered limited customization options, which could be restrictive for projects requiring extensive custom native module integration and low-level configurations.
+
+For the backend, Firebase Firestore served as our database, offering straightforward usage, robust security handling, and well-documented features. Firebase Auth was chosen for user authentication, ensuring a secure and user-friendly experience. Firebase provided real-time database synchronization, scalability, and versatile authentication methods. Nevertheless, it had vendor lock-in concerns due to its association with Google and some limitations in handling complex queries.
+
+In terms of state management, we opted for Zustand due to its efficiency in reducing boilerplate code and its gentle learning curve, making it a suitable choice for our student project. Zustand's minimal boilerplate code and simplicity made it an ideal fit for our application. However, it had a smaller community compared to larger state management solutions like Redux.
 ## Project Result
 
-Here you describe the project results. You're free in how you do it. Maybe again an image? But be aware even if an image may be worth thousands of words, it does not count as thousands of words!
-Maybe you feel like embedding some few lines of code. But please be aware of the meaning of the word **few**.
+(Here you describe the project results. You're free in how you do it. Maybe again an image? But be aware even if an image may be worth thousands of words, it does not count as thousands of words!
+Maybe you feel like embedding some few lines of code. But please be aware of the meaning of the word **few**. )
 
- Outcome
- Issues faced during the project
-
-```
-import numpy as pd
-import pandas as plt
-import matplotlib.pyplot as np
-
-# Some people want to see the world burn
-
-df = plt.DataFrame(pd.array([1,2,3]))
-````
- 
-If you need some formula [this](http://latex2png.com/) might come in handy to convert latex syntax to an image file. But you're free to use whatever you want as long as it produces image files. Please be aware adding formulas as images is the only feasible way to include math syntax. 
-
-
-
-![formula.png](../_resources/68c1f587d74c45d3a2a34fd16dd45b9b.png)
-If you want to add captions just write them in a paragraph right under the image. Otherwise please skip one line. In Medium we will add the captions accordingly.
-
-
-
+The Studibucket app has emerged as a powerful tool for students seeking to manage their finances effectively. With a user-friendly interface, the app allows users to create and allocate "buckets" for various expenses and savings goals, mirroring the concept of traditional piggy banks. The project resulted in a robust mobile app that simplifies financial decision-making for students.
 
 ## Conclusion
 
-Conclude what you archieved! You may add your names, and if you want also a link to your LinkedIn or GitHub.
+(Conclude what you archieved! You may add your names, and if you want also a link to your LinkedIn or GitHub.
  Possibilities to improve
- Future work / Outlook
-Team Members:
-- Techlabs Aachen, [LinkedIn](https://de.linkedin.com/showcase/techlabs-aachen)
+ Future work / Outlook)
 
-## Export
+In conclusion, our journey with the Studibucket project has been both educational and rewarding. We have successfully developed a budgeting mobile app that addresses the financial challenges faced by students today. Our choice of technologies, including React Native, TypeScript, Expo SDK, Firebase Firestore, and Zustand, has proven to be effective in achieving our project goals.
 
-After writing everything please export it into a single folder. You can share it with us e.g. via OneDrive or as a .zip file. The folder should be structured similar as following:
+### Future Work/Outlook
 
-```
-.
-└── blogpost_gruppe_n/
-	├── post.md
-    └── images/
-        ├── image_1
-        ├── image_2
-        ├── ...
-        └── image_m
-```
+As we look ahead, there are several avenues for further improvement and expansion of the Studibucket app. Future work includes:
 
-If you use the Joplin export function:
-- please use the Option "markdown"
-- Choose an empty folder as target
-- Send the complete folder to us e.g. via OneDrive
-
-It should then look something like this:
-
-```
-.
-└── blogpost_gruppe_n/
-    └── post/
-        └── post.md
-    └── _resources/
-        ├── 70a56c8d78f3a2f2db9d81cb079.jpg
-        ├── 072602f26fb3007296ce75da208.jpg
-        ├── ...
-        └── acaee1febda81f898cc1728c955.png
-```
-
-Thanks for your help and well done!
-
-# Cheatsheet
-
-# Headline
-## Subheadline
-
-- Bullet Point 1
-- Bullet Point 2
-
-
-1. Enumerate this
-2. Enumerate that
-3. Enumerate everything
-
-```
-Code Block
-```
-
-**bold**
-
-[Link as displayed in text](actual-link.techlabs)
-
-![Text if image not found](path/to/actual/image.png)
-
-
-
-
-
+Adding additional features such as expense tracking graphs and financial tips to enhance user engagement.
+Expanding platform compatibility to reach a wider audience, including both iOS and Android users.
+Incorporating machine learning algorithms to provide personalized financial recommendations.
+Strengthening security measures and user data protection to ensure a safe user experience.
+Collaborating with educational institutions to promote financial literacy among students.
+The Studibucket project has the potential to revolutionize how students manage their finances, and we are excited to continue its development journey. Thank you for joining us on this adventure, and we look forward to the future of Studibucket.

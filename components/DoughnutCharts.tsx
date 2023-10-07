@@ -175,7 +175,7 @@ export default function DoughnutCharts() {
   const propObj = {
     radius: 120,
     arcs: [arc1, arc2],
-    strokeWidth: 10,
+    strokeWidth: 30,
   };
 
   const rc = rect(

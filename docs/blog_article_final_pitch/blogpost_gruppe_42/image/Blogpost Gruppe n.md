@@ -25,7 +25,7 @@ We chose prominent popular Zustand for state management because of its relativel
 - Step 8: Adding finishing touches and testing
 
 ![image3.gif](../_resources/Figma.png)
-![image3.gif](../_resources/Screenshot%20from%202023-10-07%2013-17-30.png)
+![image3.gif](../_resources/homepage.png)
 
 ### Review of the tools and frameworks in detail
 
@@ -47,6 +47,9 @@ In terms of state management, we opted for Zustand due to its efficiency in redu
 
 The Studibucket app has emerged as a powerful tool for students seeking to manage their finances effectively. With a user-friendly interface, the app allows users to create and allocate "buckets" for various expenses and savings goals, mirroring the concept of traditional piggy banks. The project resulted in a robust mobile app that simplifies financial decision-making for students.
 The users are greeted by a warm login screen which then transports them to the homepage which has a doughnut chart showing the total income and outcome. From there, the user has access to several pages. The Cashflow page allows the users to monitor their past cashflow. The buckets page contains the user's buckets, both past an present.Each bucket encompasses its current savings and the date of the bucket's maturing. This page also allows users to create new buckets. The add button allows inputting income and expenses as well as which bucket they go into.
+![image3.gif](../_resources/Screenshot%20from%202023-10-07%2013-17-36.png)
+![image3.gif](../_resources/Screenshot%20from%202023-10-07%2013-17-45.png)
+![image3.gif](../_resources/Screenshot%20from%202023-10-07%2013-17-54.png)
 
 ## Conclusion
 

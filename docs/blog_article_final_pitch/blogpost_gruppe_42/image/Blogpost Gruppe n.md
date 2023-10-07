@@ -1,4 +1,3 @@
-
 # Blogpost Web Development Group 1 - Studibucket Project
 
 ## Introduction
@@ -26,9 +25,7 @@ We chose prominent popular Zustand for state management because of its relativel
 - Step 8: Adding finishing touches and testing
 
 ![image3.gif](../_resources/Figma.png)
-Design in Figma (make it center)
-
-(add picture of the actual app)
+![image3.gif](../_resources/Screenshot%20from%202023-10-07%2013-17-30.png)
 
 ### Review of the tools and frameworks in detail
 
@@ -45,28 +42,30 @@ However, Expo did have its limitations. It offered limited customization options
 For the backend, Firebase Firestore served as our database, offering straightforward usage, robust security handling, and well-documented features. Firebase Auth was chosen for user authentication, ensuring a secure and user-friendly experience. Firebase provided real-time database synchronization, scalability, and versatile authentication methods. Nevertheless, it had vendor lock-in concerns due to its association with Google and some limitations in handling complex queries.
 
 In terms of state management, we opted for Zustand due to its efficiency in reducing boilerplate code and its gentle learning curve, making it a suitable choice for our student project. Zustand's minimal boilerplate code and simplicity made it an ideal fit for our application. However, it had a smaller community compared to larger state management solutions like Redux.
+
 ## Project Result
 
-(Here you describe the project results. You're free in how you do it. Maybe again an image? But be aware even if an image may be worth thousands of words, it does not count as thousands of words!
-Maybe you feel like embedding some few lines of code. But please be aware of the meaning of the word **few**. )
-
 The Studibucket app has emerged as a powerful tool for students seeking to manage their finances effectively. With a user-friendly interface, the app allows users to create and allocate "buckets" for various expenses and savings goals, mirroring the concept of traditional piggy banks. The project resulted in a robust mobile app that simplifies financial decision-making for students.
+The users are greeted by a warm login screen which then transports them to the homepage which has a doughnut chart showing the total income and outcome. From there, the user has access to several pages. The Cashflow page allows the users to monitor their past cashflow. The buckets page contains the user's buckets, both past an present.Each bucket encompasses its current savings and the date of the bucket's maturing. This page also allows users to create new buckets. The add button allows inputting income and expenses as well as which bucket they go into.
 
 ## Conclusion
-
-(Conclude what you archieved! You may add your names, and if you want also a link to your LinkedIn or GitHub.
- Possibilities to improve
- Future work / Outlook)
 
 In conclusion, our journey with the Studibucket project has been both educational and rewarding. We have successfully developed a budgeting mobile app that addresses the financial challenges faced by students today. Our choice of technologies, including React Native, TypeScript, Expo SDK, Firebase Firestore, and Zustand, has proven to be effective in achieving our project goals.
 
 ### Future Work/Outlook
 
-As we look ahead, there are several avenues for further improvement and expansion of the Studibucket app. Future work includes:
+As we look ahead, there are several exciting avenues for further improvement and expansion of the Studibucket app. Our most prominent future goal is to make the app more community-oriented, fostering collaboration among users. We envision an option that allows flatmates to connect and create collaborative buckets for tracking shared expenses, such as groceries and bills. Additionally, we plan to introduce a forum page where users can share information about local sales and discounts, further enhancing their ability to save money.
 
-Adding additional features such as expense tracking graphs and financial tips to enhance user engagement.
-Expanding platform compatibility to reach a wider audience, including both iOS and Android users.
-Incorporating machine learning algorithms to provide personalized financial recommendations.
-Strengthening security measures and user data protection to ensure a safe user experience.
-Collaborating with educational institutions to promote financial literacy among students.
+In addition to these community-focused enhancements, we have other key future plans:
+
+Expense Tracking Graphs: We aim to provide users with detailed expense tracking graphs, enabling them to visualize their spending habits over time and make informed financial decisions.
+
+Personalized Financial Tips: Incorporating machine learning algorithms will allow us to offer personalized financial recommendations to users, helping them make smarter financial choices.
+
+Cross-Platform Compatibility: We intend to expand the app's compatibility to reach a broader audience, ensuring that both iOS and Android users can benefit from Studibucket.
+
+Enhanced Security: Strengthening security measures and user data protection will remain a top priority to ensure a safe and secure user experience.
+
+Financial Literacy Promotion: Collaborating with educational institutions to promote financial literacy among students is a crucial part of our long-term vision. We aim to empower students with the knowledge and tools they need to make informed financial decisions.
+
 The Studibucket project has the potential to revolutionize how students manage their finances, and we are excited to continue its development journey. Thank you for joining us on this adventure, and we look forward to the future of Studibucket.

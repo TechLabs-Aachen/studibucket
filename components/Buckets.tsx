@@ -28,9 +28,7 @@ export default function Buckets(props: BucketsProps) {
             styles.bar,
             props.active && { backgroundColor: theme.colors.error },
           ]}
-          progress={
-             props.currentAmount / props.goalAmount 
-          }
+          progress={props.currentAmount / props.goalAmount}
           color={props.active ? theme.colors.onPrimary : theme.colors.primary}
         />
         <Text

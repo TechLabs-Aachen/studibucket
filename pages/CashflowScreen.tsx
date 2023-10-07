@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, FlatList, SectionList } from "react-native";
-import { Timestamp, collection, collectionGroup, doc, getDoc, getDocs, query } from "firebase/firestore";
+import {
+  Timestamp,
+  collection,
+  collectionGroup,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+} from "firebase/firestore";
 import { useAuthStore } from "../stores/auth";
 import { db } from "../firebase";
 import { List, useTheme, Text } from "react-native-paper";
 import { shallow } from "zustand/shallow";
 import { groupBy, mapToArray } from "./utils/arrayUtils";
+import { where, onSnapshot } from "firebase/firestore";
 
 // ToDo's:
 // Sort data by income and expense (income above)
@@ -83,73 +92,120 @@ const DATA = [
 ];
 
 export type Position = {
-    id: string,
-    title: string,
-    money: number,
-    inputDate: Timestamp,
-    sectionKey: string,
-    type: "in" | "out", 
+  id: string;
+  title: string;
+  money: number;
+  inputDate: Timestamp;
+  sectionKey: string;
+  type: "in" | "out";
 };
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export default function CashflowScreen() {
   const user = useAuthStore((state) => state.user, shallow);
   const theme = useTheme();
-  const [cashFlowPositions, setCashFlowPositions] = useState<any>([]);
-  const cashFlowSectionsMap = groupBy<string, Position>(cashFlowPositions, (i) => i.sectionKey) 
+
+  const [incomePositons, setIncomePositions] = useState<any>([]);
+  const [expensePositons, setExpensePositions] = useState<any>([]);
+  const cashFlowPositions = incomePositons.concat(expensePositons);
+  const cashFlowSectionsMap = groupBy<string, Position>(
+    cashFlowPositions,
+    (i) => i.sectionKey
+  );
   const cashFlowSectionsArray = mapToArray(cashFlowSectionsMap, (k, v) => {
-    return ({
+    return {
       title: k,
       data: v,
-  }) })
+    };
+  });
 
-  console.log("cashArray",cashFlowSectionsArray)
+  console.log("cashArray", cashFlowSectionsArray);
+
   useEffect(() => {
+    const asyncFunc = () => {
+      const income = query(collectionGroup(db, "in"));
 
-    const asyncFunc = async () => {
-      const income = query(collectionGroup(db, 'in'));
-      const expenses = query(collectionGroup(db, 'out'));
-      const queryIncomeSnapshot = await getDocs(income);
-      const queryExpensesSnapshot = await getDocs(expenses);
-      
+      const unsubscribe = onSnapshot(income, (queryIncomeSnapshot) => {
+        const newIncomePositions = queryIncomeSnapshot.docs.map((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          const data = doc.data();
+          const inputDate = data.inputDate.toDate();
+          const inputMonth = inputDate.getMonth();
+          const inputYear = inputDate.getFullYear();
 
-      const newIncomePositions = queryIncomeSnapshot.docs.map((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        const data = doc.data();
-        const inputDate = data.inputDate.toDate();
-        const inputMonth = inputDate.getMonth();
-        const inputYear = inputDate.getFullYear();
+          const sectionKey = `${inputYear} ${months[inputMonth]}`;
+          const position = {
+            id: doc.id,
+            title: data.title,
+            money: data.amount,
+            inputDate: data.inputDate,
+            sectionKey,
+            type: "in",
+          };
+          return position;
+        });
 
-        const sectionKey = `${inputYear} ${months[inputMonth]}`
-        const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "in"}
-        return position;
-      })
+        console.log("newPositions", newIncomePositions);
+        setIncomePositions(newIncomePositions);
+      });
 
-      const newExpensesPositions = queryExpensesSnapshot.docs.map((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        const data = doc.data();
-        const inputDate = data.inputDate.toDate();
-        const inputMonth = inputDate.getMonth();
-        const inputYear = inputDate.getFullYear();
-
-        const sectionKey = `${inputYear} ${months[inputMonth]}`
-        const position = {id: doc.id, title: data.title, money: data.amount, inputDate: data.inputDate, sectionKey, type: "out"}
-        return position;
-      })
-
-      const newPositions = newIncomePositions.concat(newExpensesPositions);
-
-
-        console.log("newPositions", newPositions);
-        setCashFlowPositions(newPositions);
+      return unsubscribe;
     };
 
     if (user?.uid) {
-      asyncFunc();
+      return asyncFunc();
+    }
+  }, []);
+
+  useEffect(() => {
+    const asyncFunc = () => {
+      const expense = query(collectionGroup(db, "out"));
+
+      const unsubscribe = onSnapshot(expense, (queryExpenseSnapshot) => {
+        const newExpensePositions = queryExpenseSnapshot.docs.map((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          const data = doc.data();
+          const inputDate = data.inputDate.toDate();
+          const inputMonth = inputDate.getMonth();
+          const inputYear = inputDate.getFullYear();
+
+          const sectionKey = `${inputYear} ${months[inputMonth]}`;
+          const position = {
+            id: doc.id,
+            title: data.title,
+            money: data.amount,
+            inputDate: data.inputDate,
+            sectionKey,
+            type: "out",
+          };
+          return position;
+        });
+
+        console.log("newPositions", newExpensePositions);
+        setExpensePositions(newExpensePositions);
+      });
+
+      return unsubscribe;
+    };
+
+    if (user?.uid) {
+      return asyncFunc();
     }
   }, []);
 

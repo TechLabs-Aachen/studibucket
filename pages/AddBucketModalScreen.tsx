@@ -58,6 +58,7 @@ export default function AddBucketModalScreen() {
           visible={modalVisible}
           onDismiss={hideModal}
           contentContainerStyle={styles.content}
+          style={styles.modal}
         >
           <Text variant="displayMedium">Amount</Text>
           <RNTextInput
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
   contentTitle: {
     fontSize: 20,
     marginBottom: 12,
+  },
+  modal: {
+    justifyContent: "flex-end",
   },
   contentView: {
     justifyContent: "flex-end",

@@ -23,6 +23,7 @@ import { doc, getDoc, getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuthStore } from "../stores/auth";
 import { shallow } from "zustand/shallow";
+import BucketListItem from "../components/BucketListItem";
 
 // ToDo: styling selected bucket  *
 
@@ -165,12 +166,8 @@ export default function AddModalScreen() {
                 style={[styles.item]}
                 onPress={() => setSelectedBucketID(item.id)}
               >
-                <Buckets
+                <BucketListItem
                   title={item.title}
-                  currentAmount={item.currentAmount}
-                  goalAmount={item.goalAmount}
-                  date={new Date()}
-                  active={item.type == "active"}
                   isClicked={selectedBucketID === item.id}
                 />
               </Pressable>

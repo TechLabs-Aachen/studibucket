@@ -6,41 +6,13 @@ import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuthStore } from "../stores/auth";
 import { shallow } from "zustand/shallow";
-
-const activeBucketsData = [
-  {
-    id: "1",
-    title: "Vacation",
-    currentAmount: 50,
-    goalAmount: 300.0,
-    type: "active",
-  },
-  {
-    id: "2",
-    title: "Car",
-    currentAmount: 5000.0,
-    goalAmount: 10000.0,
-    type: "active",
-  },
-];
-
-const passiveBucketsData = [
-  {
-    id: "3",
-    title: "Trip to Bali",
-    currentAmount: 1000.0,
-    goalAmount: 2000.0,
-    type: "passive",
-  },
-];
-
-
+import { query, where, onSnapshot } from "firebase/firestore";
 
 export default function BucketsScreen() {
   const theme = useTheme();
   const user = useAuthStore((state) => state.user, shallow);
   const [buckets, setBuckets] = useState<any>([]);
-  const dateToday = new Date(); 
+  const dateToday = new Date();
 
   const DATA = [
     {
@@ -56,58 +28,60 @@ export default function BucketsScreen() {
   useEffect(() => {
     // const docRef = doc(db, "users", user!.uid, "buckets");
 
-    const asyncFunc = async () => {
-      const querySnapshot = await getDocs(
-        collection(db, "users", user!.uid, "buckets")
-      );
-      const newBuckets = querySnapshot.docs.map((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        const data = doc.data();
+    const asyncFunc = () => {
+      const q = query(collection(db, "users", user!.uid, "buckets"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const newBuckets = querySnapshot.docs.map((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          const data = doc.data();
 
-        return {
-          id: doc.id,
-          title: data.title,
-          currentAmount: 0,
-          date: data.inputDate.toDate(),
-          goalAmount: data.amount,
-          type: "active",
-          in: data.in,
-          out: data.out,
-        };
+          return {
+            id: doc.id,
+            title: data.title,
+            currentAmount: 0,
+            date: data.inputDate.toDate(),
+            goalAmount: data.amount,
+            type: "active",
+            in: data.in,
+            out: data.out,
+          };
+        });
+
+        const finalBuckets = newBuckets.map(async (newBucket) => {
+          const inSnapshot = await getDocs(
+            collection(db, "users", user!.uid, "buckets", newBucket.id, "in")
+          );
+
+          const outSnapshot = await getDocs(
+            collection(db, "users", user!.uid, "buckets", newBucket.id, "out")
+          );
+
+          const newInDocs = inSnapshot.docs.map((doc) =>
+            Number(doc.data().amount.replace(",", "."))
+          );
+          const inAmount = newInDocs.reduce((acc, cur) => acc + cur, 0);
+
+          const newOutDocs = outSnapshot.docs.map((doc) =>
+            Number(doc.data().amount.replace(",", "."))
+          );
+          const outAmount = newOutDocs.reduce((acc, cur) => acc + cur, 0);
+
+          const currentAmount = inAmount - outAmount;
+          const type =
+            currentAmount >= newBucket.goalAmount ? "active" : "passive";
+
+          console.log(newBucket.title, inAmount, outAmount);
+          return { ...newBucket, currentAmount, type };
+        });
+
+        Promise.all(finalBuckets).then((result) => setBuckets(result));
       });
 
-      const finalBuckets = newBuckets.map(async newBucket => {
-        const inSnapshot = await getDocs(
-          collection(db, "users", user!.uid, "buckets", newBucket.id, "in")
-        );
-  
-        const outSnapshot = await getDocs(
-          collection(db, "users", user!.uid, "buckets", newBucket.id, "out")
-        );
-        
-        const newInDocs = inSnapshot.docs.map((doc) => Number(doc.data().amount.replace(",", ".")));
-        const inAmount = newInDocs.reduce((acc, cur) => acc + cur, 0);
-  
-        const newOutDocs = outSnapshot.docs.map((doc) => Number(doc.data().amount.replace(",", ".")));
-        const outAmount = newOutDocs.reduce((acc, cur) => acc + cur, 0);
-  
-        const currentAmount = inAmount - outAmount;
-        const type = currentAmount >= newBucket.goalAmount ? "active" : "passive";
-  
-        console.log(newBucket.title, inAmount, outAmount)
-        return {...newBucket, currentAmount, type}
-
-      })
-
-      const result = await Promise.all(finalBuckets);
-
-      console.log("finalBuckets:", result);
-      setBuckets(result);
-
+      return unsubscribe;
     };
 
-    asyncFunc();
+    return asyncFunc();
   }, []);
 
   return (
